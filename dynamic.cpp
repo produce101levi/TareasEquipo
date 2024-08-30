@@ -5,8 +5,8 @@
 using namespace std;
 
 int Burronacci(int n){
-    if(n < 3){
-        return n;
+    if(n < 2){
+        return n + 1;
     }
 
     return 4 * Burronacci(n - 1) + 2 * Burronacci(n - 2);
