@@ -5,7 +5,7 @@
 using namespace std;
 
 int Burronacci(int n){
-    if(n < 2){
+    if(n < 3){
         return n;
     }
 
@@ -13,10 +13,16 @@ int Burronacci(int n){
     
 }
 
+// Complejidad: O(2^n)
 
 int main(){
 
-    int result = Burronacci(2);
+    int number;
+
+    cout << "Insertar número: " << endl;
+    cin >> number;
+
+    int result = Burronacci(number);
 
     cout << result << endl;
 
