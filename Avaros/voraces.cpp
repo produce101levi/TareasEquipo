@@ -6,8 +6,10 @@ using namespace std;
 vector<int> coinChange(int n, vector<int> coins, int p, int q){
     vector<int> result;
     int change = abs(p - q);
+    // O(1)
 
     sort(coins.begin(), coins.end(), greater<int>());
+    // O(n log n)
 
     // Ciclo para restar del cambio el valor de la moneda
     // y además aumentar el valor del contador
@@ -19,6 +21,7 @@ vector<int> coinChange(int n, vector<int> coins, int p, int q){
         }
         result.push_back(counter);
     }
+    // Complejidad: O(n)
 
     return result;
 }
