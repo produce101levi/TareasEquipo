@@ -1,3 +1,6 @@
+// Para consultar los casos de prueba, ver Casos_Prueba.png
+
+
 #include <iostream>
 
 using namespace std;
