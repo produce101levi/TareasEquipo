@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main(){
+void readFiles(){
     string myText1;
     string myText2;
     string myText3;
@@ -12,9 +12,10 @@ int main(){
 
     ifstream myReadFile1("transmission01.txt");
     ifstream myReadFile2("transmission02.txt");
-    ifstream myReadFile3("mcode01.txt");
-    ifstream myReadFile4("mcode02.txt");
-    ifstream myReadFile5("mcode03.txt");
+
+    ifstream mCode1("mcode01.txt");
+    ifstream mCode2("mcode02.txt");
+    ifstream mCode3("mcode03.txt");
 
     cout << "-=- TEXT 1 -=-" << endl;
     while(getline(myReadFile1, myText1)){
@@ -26,26 +27,32 @@ int main(){
         cout << myText2 << endl;
     }
 
-    cout << "-=- TEXT 3 -=-" << endl;
-    while(getline(myReadFile3, myText3)){
+    cout << "-=- MALICIOUS PATTERN -=-" << endl;
+    while(getline(mCode1, myText3)){
         cout << myText3 << endl;
     }
 
-    cout << "-=- TEXT 4 -=-" << endl;
-    while(getline(myReadFile4, myText4)){
+    cout << "-=- MALICIOUS PATTERN -=-" << endl;
+    while(getline(mCode2, myText4)){
         cout << myText4 << endl;
     }
 
-    cout << "-=- TEXT 5 -=-" << endl;
-    while(getline(myReadFile5, myText5)){
+    cout << "-=- MALICIOUS PATTERN -=-" << endl;
+    while(getline(mCode3, myText5)){
         cout << myText5 << endl;
     }
 
     myReadFile1.close();
     myReadFile2.close();
-    myReadFile3.close();
-    myReadFile4.close();
-    myReadFile5.close();
+    mCode1.close();
+    mCode2.close();
+    mCode3.close();
 
+}
+
+int main(){
+    
+    readFiles();
+    
     return 0;
 }
