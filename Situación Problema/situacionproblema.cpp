@@ -46,7 +46,7 @@ bool search(string text, string pattern)
     return false;
 }
 
-// Fills Z array for given string str[]
+// Gets Z array
 void getZarr(string str, int Z[])
 {
     int n = str.length();
