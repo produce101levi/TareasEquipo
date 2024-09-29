@@ -68,9 +68,19 @@ void getZarr(string str, int Z[])
     }
 }
 
+void findPattern();
+
 
 int main(){
     
+    findPattern();
+
+
+    return 0;
+}
+
+void findPattern(){
+
     string myText1;
     string myText2;
     string pattern1;
@@ -98,12 +108,10 @@ int main(){
         trans2.push_back(myText2);
     }
 
-    cout << "-=- MALICIOUS PATTERN -=-" << endl;
     while(getline(mCode1, line)){
         pattern1 += line;
     }
 
-    cout << "-=- MALICIOUS PATTERN -=-" << endl;
     while(getline(mCode2, line)){
         pattern2 += line;
     }
@@ -120,18 +128,30 @@ int main(){
     mCode3.close();
 
 
-    cout << "Transmission 01:" << endl;
+    cout << "-=- TRANSMISIÓN 01 -=-" << endl;
     for(int i = 0; i < trans1.size(); i++){
-        cout << "LINE " << i + 1 << endl;
-        bool patternFound = search(trans1[i], pattern3);
-        if (patternFound == 1){
-            cout << "True" << endl;
+        cout << "--- Línea " << i + 1 << " ---" << endl;
+        bool patternFound1 = search(trans1[i], pattern1);
+        bool patternFound2 = search(trans1[i], pattern2);
+        bool patternFound3 = search(trans1[i], pattern3);
+        if (patternFound1 == 1 || patternFound2 == 1 || patternFound3 == 1){
+            cout << "Patrón Encontrado: True" << endl;
         } else {
-            cout << "False" << endl;
+            cout << "Patrón Encontrado: False" << endl;
         }
     }
-
-    // search("abclevi", "levi");
-
-    return 0;
+    cout << endl;
+    
+    cout << "-=- TRANSMISIÓN 02 -=-" << endl;
+    for(int i = 0; i < trans2.size(); i++){
+        cout << "--- Línea " << i + 1 << " ---" << endl;
+        bool patternFound1 = search(trans2[i], pattern1);
+        bool patternFound2 = search(trans2[i], pattern2);
+        bool patternFound3 = search(trans2[i], pattern3);
+        if (patternFound1 == 1 || patternFound2 == 1 || patternFound3 == 1){
+            cout << "Patrón Encontrado: True" << endl;
+        } else {
+            cout << "Patrón Encontrado: False" << endl;
+        }
+    }
 }
