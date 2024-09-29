@@ -5,6 +5,17 @@ using namespace std;
 
 void getZarr(string str, int Z[]);
 
+bool search(string text, string pattern);
+
+void findPattern();
+
+int main(){
+    
+    findPattern();
+
+
+    return 0;
+}
 
 bool search(string text, string pattern)
 {
@@ -66,17 +77,6 @@ void getZarr(string str, int Z[])
             }
         }
     }
-}
-
-void findPattern();
-
-
-int main(){
-    
-    findPattern();
-
-
-    return 0;
 }
 
 void findPattern(){
