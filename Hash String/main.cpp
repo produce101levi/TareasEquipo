@@ -34,5 +34,15 @@ int main(){
         fileContent.append(filling, '[');
     }
 
+    // Crear arreglo a
+    vector<int> a(n, 0);
+
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < n; ++j) {
+            a[j] = (a[j] + fileContent[i * n + j]) % 256;
+        }
+    }
+
+
     return 0;
 }
