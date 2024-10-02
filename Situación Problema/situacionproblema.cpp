@@ -55,8 +55,8 @@ void buscarPatronZ(const string& texto, const string& patron, int mcode_num) {
 string lcs(string X, string Y) {
     int m = X.size();
     int n = Y.size();
-    int maxLength = 0;  // Length of longest common substring
-    int endIndex = 0;   // End index of the longest common substring in X
+    int maxLength = 0; 
+    int endIndex = 0;   
 
     vector<vector<int> > dp(m + 1, vector<int>(n + 1, 0));
 
@@ -73,7 +73,6 @@ string lcs(string X, string Y) {
         }
     }
 
-    // Extract the longest common substring
     if (maxLength == 0) {
         return "";
     }
