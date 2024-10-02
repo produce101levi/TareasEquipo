@@ -1,157 +1,137 @@
 #include <iostream>
 #include <fstream>
-
+#include <vector>
+#include <string>
 using namespace std;
 
-void getZarr(string str, int Z[]);
+// Función para calcular el Z-array
+vector<int> calcularZ(const string& s) {
+    int n = s.length();
+    vector<int> Z(n);
+    int L = 0, R = 0, K;
 
-bool search(string text, string pattern);
-
-void findPattern();
-
-int main(){
-    
-    findPattern();
-
-
-    return 0;
-}
-
-bool search(string text, string pattern)
-{
-
-    string concat = pattern + "$" + text;
-    int l = concat.length();
-
-    int Z[l];
-    getZarr(concat, Z);
-
-    // Print Z array
-    // for (int i = 0; i < l; i++){
-    //     if (i != l - 1){
-    //         cout << Z[i] << ", ";
-    //     } else {
-    //         cout << Z[i] << endl;
-    //     }
-    // }
-
-    for (int i = 0; i < l; ++i)
-    {
-  
-        if (Z[i] == pattern.length()){
-            printf("Patrón %s encontrado en índice Z[%zu]\n", pattern.c_str(), i - pattern.length() - 1);
-            return true;
-        }
-    }
-    return false;
-}
-
-// Gets Z array
-void getZarr(string str, int Z[])
-{
-    int n = str.length();
-    int k, R, L;
-
-    L = R = 0;
-    for (int i = 1; i < n; i++){
-        if(i > R){
+    for (int i = 1; i < n; ++i) {
+        if (i > R) {
             L = R = i;
-
-            // Extend the Z window
-            while(R < n && str[R-L] == str[R]){
-                R++;
-            }
-            Z[i] = R-L;
+            while (R < n && s[R] == s[R - L]) R++;
+            Z[i] = R - L;
             R--;
-        }else{
-            k = i - L;
-            if(Z[k] < R - i + 1){
-                Z[i] = Z[k];
-            }else{
+        } else {
+            K = i - L;
+            if (Z[K] < R - i + 1) {
+                Z[i] = Z[K];
+            } else {
                 L = i;
-                while(R < n && str[R-L] == str[R]){
-                    R++;
-                }
-                Z[i] = R-L;
+                while (R < n && s[R] == s[R - L]) R++;
+                Z[i] = R - L;
                 R--;
             }
         }
     }
+    return Z;
 }
 
-void findPattern(){
+// Función para buscar un patrón en un texto utilizando el algoritmo Z
+void buscarPatronZ(const string& texto, const string& patron, int mcode_num) {
+    string concatenado = patron + "$" + texto;
+    vector<int> Z = calcularZ(concatenado);
+    int patron_len = patron.length();
 
-    string myText1;
-    string myText2;
-    string pattern1;
-    string pattern2;
-    string pattern3;
-    string line;
-
-    ifstream myReadFile1("transmission01.txt");
-    ifstream myReadFile2("transmission02.txt");
-
-    ifstream mCode1("mcode01.txt");
-    ifstream mCode2("mcode02.txt");
-    ifstream mCode3("mcode03.txt");
-
-    vector<string> trans1;
-    vector<string> trans2;
-
-    // Transimission 01
-    while(getline(myReadFile1, myText1)){
-        trans1.push_back(myText1);
-    }
-
-    // Transimission 02
-    while(getline(myReadFile2, myText2)){
-        trans2.push_back(myText2);
-    }
-
-    while(getline(mCode1, line)){
-        pattern1 += line;
-    }
-
-    while(getline(mCode2, line)){
-        pattern2 += line;
-    }
-
-    // Malicious Pattern 3
-    while(getline(mCode3, line)){
-        pattern3 += line;
-    }
-
-    myReadFile1.close();
-    myReadFile2.close();
-    mCode1.close();
-    mCode2.close();
-    mCode3.close();
-
-
-    cout << "-=- TRANSMISIÓN 01 -=-" << endl;
-    for(int i = 0; i < trans1.size(); i++){
-        cout << "--- Línea " << i + 1 << " ---" << endl;
-        bool patternFound1 = search(trans1[i], pattern1);
-        bool patternFound2 = search(trans1[i], pattern2);
-        bool patternFound3 = search(trans1[i], pattern3);
-        if (patternFound1 == 1 || patternFound2 == 1 || patternFound3 == 1){
-            cout << "Patrón Encontrado: True" << endl;
-        } else {
-            cout << "Patrón Encontrado: False" << endl;
+    bool encontrado = false;
+    for (int i = 0; i < Z.size(); ++i) {
+        if (Z[i] == patron_len) {
+            int posicion_inicial = i - patron_len - 1;
+            int posicion_final = posicion_inicial + patron_len - 1;
+            cout << "(true) Posición inicial: " << posicion_inicial 
+                 << " Posición final: " << posicion_final << endl;
+            encontrado = true;
         }
     }
-    cout << endl;
-    
-    cout << "-=- TRANSMISIÓN 02 -=-" << endl;
-    for(int i = 0; i < trans2.size(); i++){
-        cout << "--- Línea " << i + 1 << " ---" << endl;
-        bool patternFound1 = search(trans2[i], pattern1);
-        bool patternFound2 = search(trans2[i], pattern2);
-        bool patternFound3 = search(trans2[i], pattern3);
-        if (patternFound1 == 1 || patternFound2 == 1 || patternFound3 == 1){
-            cout << "Patrón Encontrado: True" << endl;
-        } else {
-            cout << "Patrón Encontrado: False" << endl;
+    if (!encontrado) {
+        cout << "(false) Cadena no encontrada en la transmisión" << endl;
+    }
+}
+
+string lcs(string X, string Y) {
+    int m = X.size();
+    int n = Y.size();
+    int maxLength = 0;  // Length of longest common substring
+    int endIndex = 0;   // End index of the longest common substring in X
+
+    vector<vector<int> > dp(m + 1, vector<int>(n + 1, 0));
+
+    // Fill the DP table
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (X[i - 1] == Y[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+                if (dp[i][j] > maxLength) {
+                    maxLength = dp[i][j];
+                    endIndex = i - 1;
+                }
+            }
         }
     }
+
+    // Extract the longest common substring
+    if (maxLength == 0) {
+        return "";
+    }
+    return X.substr(endIndex - maxLength + 1, maxLength);
+}
+
+
+
+
+int main() {
+    string transmissionFiles[] = {"transmission01.txt", "transmission02.txt"};
+    string mcodeFiles[] = {"mcode01.txt", "mcode02.txt", "mcode03.txt"};
+    vector<string> transmissions(2), mcodes(3);
+
+    // Leer archivos de transmisión
+    bool archivoEncontrado = true;
+    for (int i = 0; i < 2; ++i) {
+        ifstream file(transmissionFiles[i]);
+        if (!file) {
+            cout << "No se encontró el archivo " << transmissionFiles[i] << endl;
+            archivoEncontrado = false;
+            continue; 
+        }
+        getline(file, transmissions[i], '\0');
+        file.close();
+        cout << "\nArchivo " << transmissionFiles[i] << endl;
+        cout << transmissions[i] << endl; // Muestra el contenido de la transmisión
+    }
+
+    // Leer archivos de código malicioso
+    for (int i = 0; i < 3; ++i) {
+        ifstream file(mcodeFiles[i]);
+        if (!file) {
+            cout << "Archivo " << mcodeFiles[i] << " no válido" << endl;
+            mcodes[i] = ""; // Marcamos como no válido
+            continue; 
+        }
+        getline(file, mcodes[i], '\0');
+        file.close();
+        cout << "Archivo " << mcodeFiles[i] << endl;
+        cout << mcodes[i] << endl; // Muestra el contenido del código malicioso
+    }
+
+    //Verificar si los códigos están contenidos en las transmisiones
+    for (int i = 0; i < 2; ++i) {
+        cout << "\nT R A N S M I S S I O N   " << (i + 1) << endl;
+        for (int j = 0; j < mcodes.size(); ++j) {
+            cout << "mcode " << (j + 1) << " ";
+            if (!mcodes[j].empty()) {
+                buscarPatronZ(transmissions[i], mcodes[j], j + 1);
+            } else {
+                cout << "Archivo transmission no válido" << endl;
+            }
+        }
+    }
+
+    string result = lcs(transmissions[0], transmissions[1]);
+    printf("\nLCS entre archivos de transmisión: %s\n", result.c_str());
+
+    return 0;
 }
