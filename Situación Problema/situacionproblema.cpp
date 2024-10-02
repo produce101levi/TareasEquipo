@@ -52,7 +52,7 @@ void buscarPatronZ(const string& texto, const string& patron, int mcode_num) {
     }
 }
 
-string lcs(string X, string Y) {
+pair<int, int> lcs(const string& X, const string& Y) {
     int m = X.size();
     int n = Y.size();
     int maxLength = 0; 
@@ -60,7 +60,6 @@ string lcs(string X, string Y) {
 
     vector<vector<int> > dp(m + 1, vector<int>(n + 1, 0));
 
-    // Fill the DP table
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
             if (X[i - 1] == Y[j - 1]) {
@@ -74,11 +73,12 @@ string lcs(string X, string Y) {
     }
 
     if (maxLength == 0) {
-        return "";
+        return {-1, -1}; 
     }
-    return X.substr(endIndex - maxLength + 1, maxLength);
-}
 
+    int startIndex = endIndex - maxLength + 1;
+    return {startIndex, endIndex};
+}
 
 
 
@@ -129,8 +129,9 @@ int main() {
         }
     }
 
-    string result = lcs(transmissions[0], transmissions[1]);
-    printf("\nLCS entre archivos de transmisión: %s\n", result.c_str());
+    pair<int, int> result = lcs(transmissions[0], transmissions[1]);
+    cout << "SUBSTRING COMÚN MÁS LARGO" << endl;
+    printf("\nPosición Inicial: %d\nPosición Final: %d\n", result.first, result.second);
 
     return 0;
 }
